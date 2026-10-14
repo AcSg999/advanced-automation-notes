@@ -1,0 +1,49 @@
+{
+  "width": 1200,
+  "fps": 20,
+  "duration": 5.6,
+  "colors": 256,
+  "dither": "none",
+  "clip_to_base_alpha": true,
+  "max_size_mb": 2.0,
+  "reveals": [
+    {
+      "id": "forward-input-hidden",
+      "axis": "x",
+      "start": 0.3,
+      "end": 1.05,
+      "exit": { "start": 4.9, "end": 5.45 }
+    },
+    {
+      "id": "forward-hidden-hidden",
+      "axis": "x",
+      "start": 1.1,
+      "end": 1.85,
+      "exit": { "start": 4.9, "end": 5.45 }
+    },
+    {
+      "id": "forward-hidden-output",
+      "axis": "x",
+      "start": 1.9,
+      "end": 2.45,
+      "exit": { "start": 4.9, "end": 5.45 }
+    }
+  ],
+  "layers": [
+    {
+      "id": "backward-output-hidden",
+      "enter": { "start": 2.7, "end": 3.2, "from": [16, 6] },
+      "exit": { "start": 4.9, "end": 5.45, "to": [0, 0] }
+    },
+    {
+      "id": "backward-hidden-hidden",
+      "enter": { "start": 3.25, "end": 3.75, "from": [16, 6] },
+      "exit": { "start": 4.9, "end": 5.45, "to": [0, 0] }
+    },
+    {
+      "id": "backward-hidden-input",
+      "enter": { "start": 3.8, "end": 4.3, "from": [16, 6] },
+      "exit": { "start": 4.9, "end": 5.45, "to": [0, 0] }
+    }
+  ]
+}

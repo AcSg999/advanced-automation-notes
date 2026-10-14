@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="470" viewBox="0 0 1200 470" role="img" aria-labelledby="title desc">
+  <title id="title">A fully connected multilayer perceptron learning</title>
+  <desc id="desc">Every neuron connects to every neuron in the next layer. Activations sweep forward from the inputs to the output, then gradients sweep back along the same connections.</desc>
+  <rect width="1200" height="470" rx="24" fill="#F7F8F5"/>
+  <text x="64" y="75" fill="#14282E" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="38" font-weight="700" letter-spacing="-1">How an MLP learns</text>
+  <text x="66" y="111" fill="#52636A" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="20">Every neuron connects to every neuron in the next layer.</text>
+
+  <g font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="18" font-weight="700" letter-spacing="1">
+    <circle cx="77" cy="151" r="6" fill="#07899A"/>
+    <text x="94" y="157" fill="#41545B">FORWARD SIGNAL</text>
+    <circle cx="335" cy="151" r="6" fill="#D97859"/>
+    <text x="352" y="157" fill="#41545B">BACKWARD GRADIENT</text>
+  </g>
+
+  <rect x="64" y="183" width="1072" height="218" rx="18" fill="#FFFFFF" stroke="#DCE4E2" stroke-width="2"/>
+
+  <g fill="none">
+    <path d="M173.9 248.0L364.2 227.3M173.9 251.4L364.1 265.7M173.4 254.8L365.0 304.2M173.2 288.7L365.2 232.7M173.9 292.0L364.2 271.3M173.9 295.4L364.1 309.7M172.2 329.8L367.0 237.3M173.2 332.7L365.2 276.7M173.9 336.0L364.2 315.3M414.0 224.0L629.0 224.0M413.7 227.1L629.4 262.9M413.0 230.0L630.6 302.2M413.7 264.9L629.4 229.1M414.0 268.0L629.0 268.0M413.7 271.1L629.4 306.9M413.0 306.0L630.6 233.8M413.7 308.9L629.4 273.1M414.0 312.0L629.0 312.0M678.7 227.5L875.6 264.0M679.0 268.2L875.0 269.7M678.7 308.8L875.5 275.5" stroke="#7FB8C2" stroke-width="3" stroke-linecap="round"/>
+    <path d="M377.1 225.9L364.8 232.8L363.6 221.9ZM377.1 266.7L363.7 271.2L364.5 260.2ZM377.6 307.5L363.6 309.6L366.4 298.9ZM377.7 229.0L366.8 238.0L363.7 227.4ZM377.1 269.9L364.8 276.8L363.6 265.9ZM377.1 310.7L363.7 315.2L364.5 304.2ZM378.7 231.7L369.4 242.3L364.6 232.3ZM377.7 273.0L366.8 282.0L363.7 271.4ZM377.1 313.9L364.8 320.8L363.6 309.9ZM642.0 224.0L629.0 229.5L629.0 218.5ZM642.2 265.1L628.5 268.3L630.3 257.5ZM642.9 306.3L628.8 307.4L632.3 297.0ZM642.2 226.9L630.3 234.5L628.5 223.7ZM642.0 268.0L629.0 273.5L629.0 262.5ZM642.2 309.1L628.5 312.3L630.3 301.5ZM642.9 229.7L632.3 239.0L628.8 228.6ZM642.2 270.9L630.3 278.5L628.5 267.7ZM642.0 312.0L629.0 317.5L629.0 306.5ZM888.3 266.4L874.6 269.4L876.6 258.6ZM888.0 269.8L875.0 275.2L875.0 264.2ZM888.3 273.3L876.4 280.9L874.5 270.1Z" fill="#7FB8C2" stroke="none"/>
+  </g>
+
+  <g fill="#FFFFFF" stroke="#738582" stroke-width="3"><circle cx="155" cy="250" r="13"/><circle cx="155" cy="294" r="13"/><circle cx="155" cy="338" r="13"/><circle cx="395" cy="224" r="13"/><circle cx="395" cy="268" r="13"/><circle cx="395" cy="312" r="13"/><circle cx="660" cy="224" r="13"/><circle cx="660" cy="268" r="13"/><circle cx="660" cy="312" r="13"/><circle cx="908" cy="270" r="15"/></g>
+
+  <g fill="#52636A" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="18" font-weight="650" text-anchor="middle">
+    <text x="155" y="394">INPUT x</text>
+    <text x="395" y="394">HIDDEN h1</text>
+    <text x="660" y="394">HIDDEN h2</text>
+    <text x="908" y="394">OUTPUT o</text>
+  </g>
+
+  <g id="forward-input-hidden" fill="none" stroke="#07899A" stroke-width="5" stroke-linecap="round">
+    <path d="M173.9 248.0L364.2 227.3M173.9 251.4L364.1 265.7M173.4 254.8L365.0 304.2M173.2 288.7L365.2 232.7M173.9 292.0L364.2 271.3M173.9 295.4L364.1 309.7M172.2 329.8L367.0 237.3M173.2 332.7L365.2 276.7M173.9 336.0L364.2 315.3"/>
+    <path d="M377.1 225.9L364.8 232.8L363.6 221.9ZM377.1 266.7L363.7 271.2L364.5 260.2ZM377.6 307.5L363.6 309.6L366.4 298.9ZM377.7 229.0L366.8 238.0L363.7 227.4ZM377.1 269.9L364.8 276.8L363.6 265.9ZM377.1 310.7L363.7 315.2L364.5 304.2ZM378.7 231.7L369.4 242.3L364.6 232.3ZM377.7 273.0L366.8 282.0L363.7 271.4ZM377.1 313.9L364.8 320.8L363.6 309.9Z" fill="#07899A" stroke="none"/>
+    <circle cx="395" cy="224" r="10" fill="#07899A" stroke="none"/><circle cx="395" cy="268" r="10" fill="#07899A" stroke="none"/><circle cx="395" cy="312" r="10" fill="#07899A" stroke="none"/>
+  </g>
+
+  <g id="forward-hidden-hidden" fill="none" stroke="#07899A" stroke-width="5" stroke-linecap="round">
+    <path d="M414.0 224.0L629.0 224.0M413.7 227.1L629.4 262.9M413.0 230.0L630.6 302.2M413.7 264.9L629.4 229.1M414.0 268.0L629.0 268.0M413.7 271.1L629.4 306.9M413.0 306.0L630.6 233.8M413.7 308.9L629.4 273.1M414.0 312.0L629.0 312.0"/>
+    <path d="M642.0 224.0L629.0 229.5L629.0 218.5ZM642.2 265.1L628.5 268.3L630.3 257.5ZM642.9 306.3L628.8 307.4L632.3 297.0ZM642.2 226.9L630.3 234.5L628.5 223.7ZM642.0 268.0L629.0 273.5L629.0 262.5ZM642.2 309.1L628.5 312.3L630.3 301.5ZM642.9 229.7L632.3 239.0L628.8 228.6ZM642.2 270.9L630.3 278.5L628.5 267.7ZM642.0 312.0L629.0 317.5L629.0 306.5Z" fill="#07899A" stroke="none"/>
+    <circle cx="660" cy="224" r="10" fill="#07899A" stroke="none"/><circle cx="660" cy="268" r="10" fill="#07899A" stroke="none"/><circle cx="660" cy="312" r="10" fill="#07899A" stroke="none"/>
+  </g>
+
+  <g id="forward-hidden-output" fill="none" stroke="#07899A" stroke-width="5" stroke-linecap="round">
+    <path d="M678.7 227.5L875.6 264.0M679.0 268.2L875.0 269.7M678.7 308.8L875.5 275.5"/>
+    <path d="M888.3 266.4L874.6 269.4L876.6 258.6ZM888.0 269.8L875.0 275.2L875.0 264.2ZM888.3 273.3L876.4 280.9L874.5 270.1Z" fill="#07899A" stroke="none"/>
+    <circle cx="908" cy="270" r="10" fill="#07899A" stroke="none"/>
+  </g>
+
+  <g id="backward-output-hidden" fill="none" stroke="#D97859" stroke-width="6" stroke-linecap="butt">
+    <path d="M678.7 227.5L888.3 266.4M679.0 268.2L888.0 269.8M678.7 308.8L888.3 273.3"/>
+    <path d="M677.7 227.3L689.5 235.1L691.5 224.2ZM678.0 268.1L691.0 273.7L691.0 262.8ZM677.7 309.0L691.5 312.2L689.6 301.4Z" fill="#D97859" stroke="none"/>
+  </g>
+
+  <g id="backward-hidden-hidden" fill="none" stroke="#D97859" stroke-width="6" stroke-linecap="butt">
+    <path d="M414.0 224.0L642.0 224.0M413.7 227.1L642.2 265.1M413.0 230.0L642.9 306.3M413.7 264.9L642.2 226.9M414.0 268.0L642.0 268.0M413.7 271.1L642.2 309.1M413.0 306.0L642.9 229.7M413.7 308.9L642.2 270.9M414.0 312.0L642.0 312.0"/>
+    <path d="M413.0 224.0L426.0 229.5L426.0 218.5ZM412.8 226.9L424.7 234.5L426.5 223.7ZM412.1 229.7L422.7 239.0L426.2 228.6ZM412.8 265.1L426.5 268.3L424.7 257.5ZM413.0 268.0L426.0 273.5L426.0 262.5ZM412.8 270.9L424.7 278.5L426.5 267.7ZM412.1 306.3L426.2 307.4L422.7 297.0ZM412.8 309.1L426.5 312.3L424.7 301.5ZM413.0 312.0L426.0 317.5L426.0 306.5Z" fill="#D97859" stroke="none"/>
+  </g>
+
+  <g id="backward-hidden-input" fill="none" stroke="#D97859" stroke-width="6" stroke-linecap="butt">
+    <path d="M173.9 248.0L377.1 225.9M173.9 251.4L377.1 266.7M173.4 254.8L377.6 307.5M173.2 288.7L377.7 229.0M173.9 292.0L377.1 269.9M173.9 295.4L377.1 310.7M172.2 329.8L378.7 231.7M173.2 332.7L377.7 273.0M173.9 336.0L377.1 313.9"/>
+    <path d="M172.9 248.1L186.4 252.1L185.2 241.2ZM172.9 251.3L185.5 257.8L186.3 246.8ZM172.4 254.5L183.6 263.1L186.4 252.4ZM172.3 289.0L186.3 290.6L183.2 280.0ZM172.9 292.1L186.4 296.1L185.2 285.2ZM172.9 295.3L185.5 301.8L186.3 290.8ZM171.3 330.3L185.4 329.7L180.6 319.7ZM172.3 333.0L186.3 334.6L183.2 324.0ZM172.9 336.1L186.4 340.1L185.2 329.2Z" fill="#D97859" stroke="none"/>
+  </g>
+  <text x="64" y="437" fill="#52636A" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="18" font-weight="600" letter-spacing=".5">PREDICT  →  COMPUTE LOSS  →  PROPAGATE GRADIENTS  →  UPDATE WEIGHTS</text>
+</svg>
