@@ -59,7 +59,7 @@ out = np.dot(W3, h2) + b3  # Output neuron (1 x 1)
 </details>
 
 <details>
-<summary>Backward propagation</summary>
+<summary>Backward propagation，求的是损失对于每层的W和b的梯度</summary>
 
 ![alt text](image-1.png)
 $$
@@ -84,7 +84,7 @@ Loop until convergence:
     2. Each hidden activity can affect many output units and can therefore have many separate effects on the error. These effects must be combined，求和
     3. We can compute error derivatives for all the hidden units efficiently Once we have the error derivatives for the hidden activities, it's easy to get the error derivatives for the weights going into a hidden unit
 - This is just the chain rule!
-- One-layer network example (without a hidden layer):
+- **One-layer** network example (without a hidden layer):
 
   ![Single-layer network showing input units connected to output units](image-2.png)
 
@@ -183,6 +183,8 @@ o_k^{(n)}
 \end{aligned}
 $$
 
+上面这个正向1，2；反向1，2，3非常重要，后面矩阵不会就回头看。
+
 ### Matrix form
 
 设一层有 $D$ 个输入、$K$ 个输出，$W=[w_{ki}]$：
@@ -209,7 +211,7 @@ $$
 
 $\odot$ 表示 elementwise multiplication。
 
-**Weight and bias gradients**
+**Weight and bias gradients**这里对W和对b求导，前面的都一样，就是后面对Z求导一个得到x，一个得到1，
 
 $$
 \frac{\partial E}{\partial W}
@@ -220,7 +222,7 @@ $$
 =\boldsymbol{\delta}^{z}
 $$
 
-多层网络只需对每一层重复计算（$\mathbf{a}^{(0)}=\mathbf{x}$）：
+多层网络只需对每一层重复计算（$\mathbf{a}^{(0)}=\mathbf{x}$） g指的是激活函数：
 
 $$
 \mathbf{z}^{(\ell)}
@@ -237,6 +239,8 @@ $$
  \boldsymbol{\delta}^{z,(\ell+1)}}_{\text{下一层各神经元影响之和}}
  \odot g'\!\left(\mathbf{z}^{(\ell)}\right)
 $$
+![alt text](image-4.png)
+> 这是一种迭代
 
 因此不必逐个神经元手算；矩阵乘法一次完成整层的求和与计算。
 
