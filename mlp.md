@@ -240,10 +240,92 @@ $$
  \odot g'\!\left(\mathbf{z}^{(\ell)}\right)
 $$
 ![alt text](image-4.png)
-> 这是一种迭代
+> 这是一种迭代，这是2-layer network
+
+![alt text](image-5.png)
+从前文可以看出，E对于hj的偏导数是输出端开始到下一层所有神经元对hj的偏导数之和，W^T就是把下一层所有神经元对hj的偏导数求和。
 
 因此不必逐个神经元手算；矩阵乘法一次完成整层的求和与计算。
 
-![全连接多层感知机的学习过程：激活沿每一层连接向前传播，梯度沿同样的连接向后传播](./assets/readme/mlp-learning-flow.gif)
 
 </details>
+
+### Gradient update（梯度更新）
+
+反向传播得到梯度后，沿梯度的反方向调整参数，以减小损失。
+
+先区分符号：
+
+- $w_{ki}$ 是从输入单元 $i$ 到输出单元 $k$ 的一个权重；$W=[w_{ki}]$ 是整层的权重矩阵。
+- $\eta>0$ 是学习率，控制每次更新的步长；$\leftarrow$ 表示用右侧计算结果替换左侧参数。
+- $N$ 是训练样本总数；上标 $(n)$ 表示第 $n$ 个样本，不是乘方。
+- $E^{(n)}=E(\mathbf{o}^{(n)},\mathbf{t}^{(n)})$ 是单个样本的损失；本节按图中约定，$E=\sum_{n=1}^{N}E^{(n)}$ 是全部样本的损失之和。
+- $\partial E/\partial w_{ki}$ 是一个标量；$\partial E/\partial W=[\partial E/\partial w_{ki}]_{k,i}$ 是与 $W$ 同形状的梯度矩阵，表示对每个权重分别求偏导。
+
+**Scalar form：更新一个权重**
+
+1. **Batch gradient descent（批量梯度下降）**：遍历全部训练样本、累加梯度后，更新一次。
+
+   $$
+   w_{ki}\leftarrow w_{ki}-\eta\frac{\partial E}{\partial w_{ki}}
+   =w_{ki}-\eta\sum_{n=1}^{N}\frac{\partial E^{(n)}}{\partial w_{ki}}
+   $$
+
+   求和中的所有梯度都在同一组当前参数处计算，遍历过程中不更新参数。
+
+2. **Stochastic gradient descent（随机梯度下降，SGD）**：每次取一个训练样本，计算梯度后立即更新。
+
+   $$
+   w_{ki}\leftarrow w_{ki}-\eta\frac{\partial E^{(n)}}{\partial w_{ki}}
+   $$
+
+   通常随机抽取样本，或每轮打乱样本顺序。不同样本的梯度方向可能不同，因此更新会有波动。
+
+3. **Mini-batch gradient descent（小批量梯度下降）**：每次取一小批样本，汇总梯度后更新。设这批样本的索引集合为 $\mathcal{B}$，样本数为 $B=|\mathcal{B}|$，采用平均损失时：
+
+   $$
+   w_{ki}\leftarrow w_{ki}
+   -\eta\frac{1}{B}\sum_{n\in\mathcal{B}}
+   \frac{\partial E^{(n)}}{\partial w_{ki}}
+   $$
+
+**Matrix form：一次更新整层权重（batch update）**
+
+$$
+W\leftarrow W-\eta\frac{\partial E}{\partial W}
+=W-\eta\sum_{n=1}^{N}\frac{\partial E^{(n)}}{\partial W}
+$$
+
+代入前面推导的单样本梯度，可得：
+
+$$
+W\leftarrow W-\eta\sum_{n=1}^{N}
+\boldsymbol{\delta}^{z,(n)}\left(\mathbf{x}^{(n)}\right)^T,
+\qquad
+\mathbf{b}\leftarrow\mathbf{b}-\eta\sum_{n=1}^{N}\boldsymbol{\delta}^{z,(n)}
+$$
+
+![alt text](image-6.png)
+
+
+### Add momentum（加入动量）
+
+普通梯度下降只看当前梯度；动量法还保留过去的更新趋势。
+
+- $w_{ki}$：权重；$v$：该权重对应的历史累积量，初始为 $0$。
+- $\eta$：学习率；$\gamma\in[0,1)$：历史保留比例。
+- $\partial E/\partial w_{ki}$：当前损失对权重的梯度。
+
+先更新 $v$，再更新权重：
+
+$$
+v\leftarrow\underbrace{\gamma v}_{\text{保留历史}}
++\underbrace{\eta\frac{\partial E}{\partial w_{ki}}}_{\text{加入当前梯度}},
+\qquad
+w_{ki}\leftarrow w_{ki}-v.
+$$
+
+梯度持续同向时，历史累积使更新加速；梯度来回变号时，会部分抵消，减轻振荡。$\gamma=0$ 就退化为普通梯度下降。
+
+> 图中把权重更新放在上面；标准实现应先更新动量，再用新的动量更新权重。
+> momentum加速一致方向的移动、缓解震荡；有时帮助离开局部最优。
