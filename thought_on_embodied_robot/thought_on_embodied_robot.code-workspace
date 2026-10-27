@@ -1,0 +1,43 @@
+{
+  "folders": [
+    {
+      "path": "."
+    }
+  ],
+  "settings": {
+    "latex-workshop.latex.tools": [
+      {
+        "name": "book-xelatex",
+        "command": "D:/anaconda/python.exe",
+        "args": [
+          "%DIR%/build_pdf.py",
+          "--tex",
+          "%DOC_EXT%",
+          "--engine",
+          "D:/miktex/miktex/bin/x64/xelatex.exe"
+        ]
+      }
+    ],
+    "latex-workshop.latex.recipes": [
+      {
+        "name": "讲义 · XeLaTeX",
+        "tools": [
+          "book-xelatex"
+        ]
+      }
+    ],
+    "latex-workshop.latex.recipe.default": "first",
+    "latex-workshop.latex.autoBuild.run": "onSave",
+    "latex-workshop.latex.outDir": "%DIR%/.build",
+    "latex-workshop.view.pdf.viewer": "tab",
+    "latex-workshop.synctex.afterBuild.enabled": true,
+    "files.exclude": {
+      ".build": true
+    },
+    "files.encoding": "utf8",
+    "[latex]": {
+      "editor.wordWrap": "on"
+    },
+    "latex-workshop.latex.build.enableMagicComments": false
+  }
+}
