@@ -21,7 +21,7 @@ Use the links below to read or download the materials.
 
 - **Study**: download a PDF and follow its contents. Equations, images, and explanatory notes are retained from the source.
 - **Review and editing**: open the MD and use GitHub's source view, diffs, and history to follow changes.
-- **Editing the embodied intelligence guide**: see its [editing and build instructions](thought_on_embodied_robot/README.md) in Chinese.
+
 
 ## Contributing
 

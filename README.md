@@ -15,7 +15,7 @@
 | 1 | KNN：K 近邻方法 | [MD](deep_learning/KNN.md) | [PDF](https://acsg999.github.io/advanced-automation-notes/deep_learning/KNN.pdf) | 基于实例的学习、分类与回归、邻居数量与距离 |
 | 2 | MLP：多层感知机 | [MD](deep_learning/mlp.md) | [PDF](https://acsg999.github.io/advanced-automation-notes/deep_learning/mlp.pdf) | 前向传播、反向传播、梯度更新与动量 |
 | 3 | 西湖大学强化学习 | [MD](rl-xihu/西湖大学强化学习.md) | [PDF](https://acsg999.github.io/advanced-automation-notes/rl-xihu/%E8%A5%BF%E6%B9%96%E5%A4%A7%E5%AD%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0.pdf) | Bellman 方程、价值迭代、MC、TD、DQN、策略梯度与 Actor-Critic |
-| 4 | 具身智能技术路线小书 | [latex](thought_on_embodied_robot/roadmap_for_embodied_tech.tex) | [PDF](https://acsg999.github.io/advanced-automation-notes/thought_on_embodied_robot/roadmap_for_embodied_tech.pdf) | 任务建模、VLA、力触觉、世界模型、系统组合与评测 |
+| 4 | 具身智能技术路线 | [latex](thought_on_embodied_robot/roadmap_for_embodied_tech.tex) | [PDF](https://acsg999.github.io/advanced-automation-notes/thought_on_embodied_robot/roadmap_for_embodied_tech.pdf) | 任务建模、VLA、力触觉、世界模型、系统组合与评测 |
 
 
 ## 如何阅读
