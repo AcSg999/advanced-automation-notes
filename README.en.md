@@ -22,7 +22,6 @@ Use the links below to read or download the materials.
 - **Study**: download a PDF and follow its contents. Equations, images, and explanatory notes are retained from the source.
 - **Review and editing**: open the MD and use GitHub's source view, diffs, and history to follow changes.
 
-
 ## Contributing
 
 Feel free to fork this repository, clarify concepts, correct equations, improve figures and references, or share questions encountered while studying.
