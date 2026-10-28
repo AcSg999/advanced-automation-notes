@@ -1,35 +1,11 @@
 # 具身智能技术路线小书
 
-打开 `thought_on_embodied_robot.code-workspace`，在 VS Code 中编辑 `roadmap_for_embodied_tech.tex`。
-
 - **看效果**：按 `Ctrl+Alt+V` 打开内置 PDF 预览，保存 `.tex` 后自动重新编译。
 - **对应位置**：在源码中按 `Ctrl+Alt+J` 跳到 PDF；在内置 PDF 中按住 Ctrl 单击可返回源码。
 - **改版式**：修改 `bookstyle.tex` 中的字号、页边距、行距和标题设置。
 - **改配图**：替换 `assets` 中相应图片，或修改正文中的 `\includegraphics`。
 - **命令行编译**：在本目录运行 `python build_pdf.py`。
 
-编译使用你现有的 MiKTeX / XeLaTeX。PDF 会更新到根目录，目录、交叉引用和 SyncTeX 等中间文件集中在 `.build`。正文使用原生 LaTeX，Python 只负责调用编译器。
+编译使用 MiKTeX / XeLaTeX。PDF 会更新到根目录，目录、交叉引用和 SyncTeX 等中间文件集中在 `.build`。正文使用原生 LaTeX，Python 只负责调用编译器。
 
-`roadmap_for_embodied_tech.md` 保留为迁移前的内容底稿。此后的编辑以 `.tex` 为准，日常编译直接使用现有 `.tex`。
 
-## 工作记录
-
-### 2026-10-27
-
-将原有 Markdown 与 Python 绘制的讲义迁移为原生 LaTeX。保留 20 章、3 个附录、23 个公式、6 幅图及 44 条参考资料；补齐项目内图片，配置保存编译、PDF 预览和 SyncTeX。中文使用宋体，英文使用 Times，数学采用 LaTeX 数学字体，表格使用三线表。
-
-完成现有 MiKTeX / XeLaTeX 实编译与全书版面检查：47 页，6 幅配图、44 条参考资料，零溢出版框、零缺字、零未定义引用；已验证 SyncTeX 源码定位。
-
-- 修复 VS Code 编译：当前打开的父目录 `md_for_ML` 增加工作区配置；编译命令明确使用本机 Python 与 MiKTeX 的绝对路径，避免扩展进程的 PATH 影响。独立项目工作区保留相同配置。
-
-- 清理重复配置：当前工作区统一使用父目录 `.vscode/settings.json`；移除子目录的 `settings.json` 和扩展推荐文件，并删除空 `.vscode` 目录。独立 `.code-workspace` 文件仍包含完整编译配置。
-
-### 2026-10-28
-
-整理仓库的中英文 README 与资料目录；英文版已同步用户修订后的标题、介绍、LaTeX 入口及精简结构。
-
-补齐 KNN、MLP、西湖大学强化学习的 PDF，分别为 7、10、53 页。沿用现有讲义的字体、A4 页边距和页眉页脚，保留原稿语言与正文；完成全部新增页面的预览检查，编译无缺字和版面溢出。具身智能讲义继续保留现有 47 页 PDF 与原生 LaTeX 工作流。
-
-新增仓库根目录的 `scripts/build_pdfs.py` 统一构建入口，修正 MLP 横幅的相对路径，清理本次构建缓存与页面预览。
-
-将中英文 README 中的 4 份 PDF 链接统一改为 GitHub Pages 网站的直接访问地址，便于从仓库进入在线阅读与下载。
