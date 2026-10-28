@@ -12,10 +12,10 @@ Use the links below to read or download the materials.
 
 | No. | Topic | Markdown | PDF | Coverage |
 | :---: | --- | :---: | :---: | --- |
-| 1 | K-Nearest Neighbors | [MD](deep_learning/KNN.md) | [PDF](deep_learning/KNN.pdf) | Instance-based learning, classification and regression, neighbor count, and distance |
-| 2 | Multilayer Perceptrons | [MD](deep_learning/mlp.md) | [PDF](deep_learning/mlp.pdf) | Forward propagation, backpropagation, gradient updates, and momentum |
-| 3 | Westlake University Reinforcement Learning Notes | [MD](rl-xihu/西湖大学强化学习.md) | [PDF](rl-xihu/西湖大学强化学习.pdf) | Bellman equations, value iteration, MC, TD, DQN, policy gradients, and Actor-Critic |
-| 4 | A Short Guide to Technical Routes in Embodied Intelligence | [LaTeX](thought_on_embodied_robot/roadmap_for_embodied_tech.tex) | [PDF](thought_on_embodied_robot/roadmap_for_embodied_tech.pdf) | Task modeling, VLA, force and touch, world models, system integration, and evaluation |
+| 1 | K-Nearest Neighbors | [MD](deep_learning/KNN.md) | [PDF](https://acsg999.github.io/advanced-automation-notes/deep_learning/KNN.pdf) | Instance-based learning, classification and regression, neighbor count, and distance |
+| 2 | Multilayer Perceptrons | [MD](deep_learning/mlp.md) | [PDF](https://acsg999.github.io/advanced-automation-notes/deep_learning/mlp.pdf) | Forward propagation, backpropagation, gradient updates, and momentum |
+| 3 | Westlake University Reinforcement Learning Notes | [MD](rl-xihu/西湖大学强化学习.md) | [PDF](https://acsg999.github.io/advanced-automation-notes/rl-xihu/%E8%A5%BF%E6%B9%96%E5%A4%A7%E5%AD%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0.pdf) | Bellman equations, value iteration, MC, TD, DQN, policy gradients, and Actor-Critic |
+| 4 | A Short Guide to Technical Routes in Embodied Intelligence | [LaTeX](thought_on_embodied_robot/roadmap_for_embodied_tech.tex) | [PDF](https://acsg999.github.io/advanced-automation-notes/thought_on_embodied_robot/roadmap_for_embodied_tech.pdf) | Task modeling, VLA, force and touch, world models, system integration, and evaluation |
 
 ## Reading
 
