@@ -3,6 +3,7 @@
 from pathlib import Path
 import argparse
 import json
+import os
 import re
 import shutil
 import subprocess
@@ -63,18 +64,35 @@ def verify_images(document, source):
 
 
 def build_markdown(source, engine):
-    # 临时目录由上下文管理器清理，成功或中断都不在仓库留下编译产物。
-    with TemporaryDirectory(prefix="markdown-pdf-") as temporary:
-        compile_markdown(source, engine, Path(temporary))
+    # 在仓库内编译，打印具体位置；结束后删除本次临时目录和空的父目录。
+    build_root = SCRIPTS.parent / ".build"
+    pdf_root = build_root / "pdf"
+    pdf_root.mkdir(parents=True, exist_ok=True)
+    work = None
+    try:
+        with TemporaryDirectory(prefix="markdown-pdf-", dir=pdf_root) as temporary:
+            work = Path(temporary)
+            print(f"临时目录：{work}", flush=True)
+            compile_markdown(source, engine, work)
+    finally:
+        for folder in (pdf_root, build_root):
+            if folder.is_dir() and not any(folder.iterdir()):
+                folder.rmdir()
+        if work is not None and not work.exists():
+            print(f"临时目录已删除：{work}", flush=True)
 
 
 def compile_markdown(source, engine, work):
     target = source.with_suffix(".pdf")
     print(f"输出目标：{target}", flush=True)
+    # 子进程的内部临时文件也使用同一目录，随本次编译一起清理。
+    environment = os.environ.copy()
+    environment.update({name: str(work) for name in ("TMP", "TEMP", "TMPDIR")})
     pandoc = executable("pandoc")
     result = subprocess.run(
         [pandoc, "--from=markdown+tex_math_dollars-implicit_figures", "--to=json"],
         input=prepare_markdown(source), text=True, encoding="utf-8", capture_output=True, check=True,
+        env=environment,
     )
     document = json.loads(result.stdout)
     # 从解析后的标题取封面文字，避免将代码块中的 # 误认为标题。
@@ -84,6 +102,7 @@ def compile_markdown(source, engine, work):
             [pandoc, "--from=json", "--to=plain", "--wrap=none"],
             input=json.dumps({**document, "blocks": [heading]}),
             text=True, encoding="utf-8", capture_output=True, check=True,
+            env=environment,
         )
         title = plain.stdout.strip()
     else:
@@ -98,6 +117,7 @@ def compile_markdown(source, engine, work):
          "--metadata", f"shorttitle={title}", "--metadata", f"source={source.as_posix()}",
          "--toc", "--toc-depth=3", "--output", str(tex)],
         input=result.stdout, text=True, encoding="utf-8", check=True,
+        env=environment,
     )
     # 在原 Markdown 的目录运行，以保留全部相对图片路径。
     command = [engine, "--disable-installer", "-interaction=nonstopmode", "-halt-on-error",
@@ -105,7 +125,7 @@ def compile_markdown(source, engine, work):
     previous = None
     for run in range(1, 4):
         print(f"{source.name}: XeLaTeX {run}/3，{image_count} 幅图", flush=True)
-        result = subprocess.run(command, cwd=source.parent, capture_output=True)
+        result = subprocess.run(command, cwd=source.parent, capture_output=True, env=environment)
         if result.returncode:
             tail = result.stdout.decode("utf-8", errors="replace")[-4000:]
             raise RuntimeError(f"编译中断，未更新最终 PDF：{target}\n{tail}")

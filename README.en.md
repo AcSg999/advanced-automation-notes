@@ -47,5 +47,5 @@ python scripts/build_pdfs.py "deep_learning/mlp.md"
 python thought_on_embodied_robot/build_pdf.py
 ```
 
-Each run converts one file; no registration in the script is needed. The PDF is saved beside its Markdown source. The cover uses the first Markdown heading, falling back to the filename. Temporary files are removed when the run ends; errors and layout warnings appear in the terminal.
+Each run converts one file; no registration in the script is needed. The PDF is saved beside its Markdown source. The cover uses the first Markdown heading, falling back to the filename. Temporary build directories live under `.build/pdf/` in this repository; the terminal prints their creation and removal paths. Temporary files are removed when the run ends; errors and layout warnings appear in the terminal.
 

@@ -50,7 +50,7 @@ python scripts/build_pdfs.py "deep_learning/mlp.md"
 python thought_on_embodied_robot/build_pdf.py
 ```
 
-每次运行转换一个文件，无需在脚本中登记，PDF 放在对应 Markdown 目录下。封面标题取第一个 Markdown 标题，没有标题时使用文件名；临时文件在运行结束后自动删除，报错和排版警告直接显示在终端。
+每次运行转换一个文件，无需在脚本中登记，PDF 放在对应 Markdown 目录下。封面标题取第一个 Markdown 标题，没有标题时使用文件名。临时编译目录位于本仓库的 `.build/pdf/` 下，终端会打印创建和删除的位置；运行结束后自动清理，报错和排版警告直接显示在终端。
 
 
 
