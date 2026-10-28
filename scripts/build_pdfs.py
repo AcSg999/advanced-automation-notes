@@ -1,4 +1,4 @@
-"""从 Markdown 重建讲义 PDF；具身智能讲义沿用原生 LaTeX 编译。"""
+"""读取指定的 Markdown 文件，在原目录生成同名讲义 PDF。"""
 
 from pathlib import Path
 import argparse
@@ -7,16 +7,10 @@ import re
 import shutil
 import subprocess
 import sys
+from tempfile import TemporaryDirectory
 
 
-ROOT = Path(__file__).resolve().parents[1]
 SCRIPTS = Path(__file__).resolve().parent
-LECTURES = {
-    "knn": ("deep_learning/KNN.md", "KNN：K 近邻方法", "从样本间的距离到分类与回归"),
-    "mlp": ("deep_learning/mlp.md", "MLP：多层感知机", "前向传播、反向传播与梯度更新"),
-    "rl": ("rl-xihu/西湖大学强化学习.md", "西湖大学强化学习", "课程学习笔记：从 Bellman 方程到 Actor-Critic"),
-}
-EMBODIED = ROOT / "thought_on_embodied_robot/roadmap_for_embodied_tech.pdf"
 
 
 def executable(name, fallback=None):
@@ -35,8 +29,9 @@ def prepare_markdown(source):
     # HTML 折叠框在纸面展开，摘要成为真正的章节标题。
     text = re.sub(r"<summary>(.*?)</summary>", r"\n\n## \1\n\n", text, flags=re.S)
     text = re.sub(r"</?details\b[^>]*>", "", text)
-    if source.stem == "西湖大学强化学习":
-        text = re.sub(r"\A\s*# 西湖大学强化学习\s*\n", "", text)
+    # 手记中独占一行的单个 $ 按跨行公式处理，原始 MD 不变。
+    text = re.sub(r"(?m)^([ \t]*)\$[ \t]*\n([\s\S]*?)\n\1\$[ \t]*$",
+                  lambda match: match[1] + "$$\n" + match[2] + "\n" + match[1] + "$$", text)
     # 原稿有 "$公式$1." 等紧接编号的写法；在定界符外补空格，
     # 避免 Pandoc 将公式末尾的美元符号误读为正文，原始 MD 不变。
     text = re.sub(r"(?<!\$)\$(?!\$)([^\n$]+?)\$(?!\$)",
@@ -67,26 +62,40 @@ def verify_images(document, source):
     return count
 
 
-def build_markdown(key, engine):
-    relative, title, subtitle = LECTURES[key]
-    source = ROOT / relative
+def build_markdown(source, engine):
+    # 临时目录由上下文管理器清理，成功或中断都不在仓库留下编译产物。
+    with TemporaryDirectory(prefix="markdown-pdf-") as temporary:
+        compile_markdown(source, engine, Path(temporary))
+
+
+def compile_markdown(source, engine, work):
     target = source.with_suffix(".pdf")
-    work = ROOT / ".build" / "pdf" / key
-    work.mkdir(parents=True, exist_ok=True)
+    print(f"输出目标：{target}", flush=True)
     pandoc = executable("pandoc")
     result = subprocess.run(
         [pandoc, "--from=markdown+tex_math_dollars-implicit_figures", "--to=json"],
         input=prepare_markdown(source), text=True, encoding="utf-8", capture_output=True, check=True,
     )
     document = json.loads(result.stdout)
+    # 从解析后的标题取封面文字，避免将代码块中的 # 误认为标题。
+    heading = next((block for block in document["blocks"] if block["t"] == "Header"), None)
+    if heading:
+        plain = subprocess.run(
+            [pandoc, "--from=json", "--to=plain", "--wrap=none"],
+            input=json.dumps({**document, "blocks": [heading]}),
+            text=True, encoding="utf-8", capture_output=True, check=True,
+        )
+        title = plain.stdout.strip()
+    else:
+        title = source.stem
     image_count = verify_images(document, source)
     tex = work / "lecture.tex"
     subprocess.run(
         [pandoc, "--from=json", "--to=latex", "--standalone", "--syntax-highlighting=none",
          f"--template={SCRIPTS / 'lecture-template.tex'}",
          f"--lua-filter={SCRIPTS / 'lecture-layout.lua'}",
-         "--metadata", f"title={title}", "--metadata", f"subtitle={subtitle}",
-         "--metadata", f"shorttitle={title}", "--metadata", f"source={relative}",
+         "--metadata", f"title={title}", "--metadata", "subtitle=学习笔记",
+         "--metadata", f"shorttitle={title}", "--metadata", f"source={source.as_posix()}",
          "--toc", "--toc-depth=1", "--output", str(tex)],
         input=result.stdout, text=True, encoding="utf-8", check=True,
     )
@@ -95,11 +104,11 @@ def build_markdown(key, engine):
                "-file-line-error", f"-output-directory={work}", str(tex)]
     previous = None
     for run in range(1, 4):
-        print(f"{key}: XeLaTeX {run}/3，{image_count} 幅图", flush=True)
+        print(f"{source.name}: XeLaTeX {run}/3，{image_count} 幅图", flush=True)
         result = subprocess.run(command, cwd=source.parent, capture_output=True)
         if result.returncode:
             tail = result.stdout.decode("utf-8", errors="replace")[-4000:]
-            raise RuntimeError(f"编译失败：{work / 'lecture.log'}\n{tail}")
+            raise RuntimeError(f"编译中断，未更新最终 PDF：{target}\n{tail}")
         state = tuple((work / f"lecture{ext}").read_bytes()
                       if (work / f"lecture{ext}").exists() else b""
                       for ext in (".aux", ".toc", ".out"))
@@ -110,43 +119,26 @@ def build_markdown(key, engine):
     issues = [line for line in log.splitlines()
               if "Missing character:" in line or "Overfull \\hbox" in line
               or "Overfull \\vbox" in line or "undefined references" in line]
-    if issues:
-        raise RuntimeError(f"需要检查版面：{work / 'lecture.log'}\n" + "\n".join(issues))
     shutil.copy2(work / "lecture.pdf", target)
-    # 只清理本脚本在仓库 .build/pdf 下生成的目录。
-    if work.resolve().is_relative_to((ROOT / ".build" / "pdf").resolve()):
-        shutil.rmtree(work)
-    print(f"已生成 {target.relative_to(ROOT)}", flush=True)
+    print(f"已生成 {target}", flush=True)
+    if issues:
+        print("排版警告（PDF 已输出）：\n" + "\n".join(issues),
+              file=sys.stderr)
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("lectures", nargs="*", metavar="主题",
-                        help="knn / mlp / rl / embodied；指定主题时重建该 PDF")
-    parser.add_argument("--all", action="store_true", help="重建全部 4 份 PDF")
+    parser.add_argument("source", type=Path, metavar="Markdown路径",
+                        help="Markdown 文件的相对或绝对路径；生成或覆盖同名 PDF")
     parser.add_argument("--engine", help="XeLaTeX 的可执行文件路径")
     args = parser.parse_args()
-    unknown = set(args.lectures) - {*LECTURES, "embodied"}
-    if unknown:
-        parser.error(f"未知主题：{', '.join(sorted(unknown))}")
-    targets = list(dict.fromkeys(args.lectures))
-    if args.all:
-        targets = [*LECTURES, "embodied"]
-    elif not targets:
-        targets = [key for key, (relative, _, _) in LECTURES.items()
-                   if not (ROOT / relative).with_suffix(".pdf").is_file()]
-        if not EMBODIED.is_file():
-            targets.append("embodied")
-    if not targets:
-        print("4 份 PDF 均已存在。修改正文后可指定主题重建，或使用 --all。")
-        return 0
+    source = args.source.expanduser().resolve()
+    if source.suffix.lower() not in {".md", ".markdown"}:
+        parser.error("请输入 .md 或 .markdown 文件路径。")
+    if not source.is_file():
+        parser.error(f"Markdown 文件不存在：{source}")
     engine = args.engine or executable("xelatex", "D:/miktex/miktex/bin/x64/xelatex.exe")
-    for key in targets:
-        if key == "embodied":
-            subprocess.run([sys.executable, str(EMBODIED.parent / "build_pdf.py"),
-                            "--engine", engine], check=True)
-        else:
-            build_markdown(key, engine)
+    build_markdown(source, engine)
     return 0
 
 

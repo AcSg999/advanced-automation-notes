@@ -37,15 +37,19 @@
 在仓库根目录运行：
 
 ```bash
-# 补齐缺失的 PDF；已有 PDF 保留
-python scripts/build_pdfs.py
+# 传入 Markdown 路径，在原目录生成或覆盖同名 PDF, 如
+python scripts/build_pdfs.py rl-algorithms/TRPO_handnote.md
 
-# 修改正文后，指定需要重建的主题：knn / mlp / rl / embodied
-python scripts/build_pdfs.py mlp
+# 也支持绝对路径；路径含空格时加引号，如
+python scripts/build_pdfs.py "deep_learning/mlp.md"
 
-# 重建全部 4 份 PDF
-python scripts/build_pdfs.py --all
+# 具身智能讲义使用原生 LaTeX，沿用独立构建脚本
+python thought_on_embodied_robot/build_pdf.py
 ```
+
+每次运行转换一个文件，无需在脚本中登记，PDF 放在对应 Markdown 目录下。封面标题取第一个 Markdown 标题，没有标题时使用文件名；临时文件在运行结束后自动删除，报错和排版警告直接显示在终端。
+
+
 
 
 

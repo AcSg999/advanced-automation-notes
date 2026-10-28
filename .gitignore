@@ -3,3 +3,6 @@ thought_on_embodied_robot/.gitignore
 .venv/
 .build/
 __pycache__/
+
+AGENTS.md
+WORK_LOG.md

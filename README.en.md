@@ -35,13 +35,15 @@ Install **Python 3.9+, Pandoc 3.9+, and XeLaTeX** (TeX Live or MiKTeX), with Sim
 Run from the repository root:
 
 ```bash
-# Generate missing PDFs, preserving existing ones
-python scripts/build_pdfs.py
+# Pass a Markdown path; create or replace the PDF beside the source like：
+python scripts/build_pdfs.py rl-algorithms/TRPO_handnote.md
 
-# Rebuild a topic after editing: knn / mlp / rl / embodied
-python scripts/build_pdfs.py mlp
+# Absolute paths also work; quote paths containing spaces like：
+python scripts/build_pdfs.py "deep_learning/mlp.md"
 
-# Rebuild all 4 PDFs
-python scripts/build_pdfs.py --all
+# The embodied intelligence notes keep their native LaTeX build script
+python thought_on_embodied_robot/build_pdf.py
 ```
+
+Each run converts one file; no registration in the script is needed. The PDF is saved beside its Markdown source. The cover uses the first Markdown heading, falling back to the filename. Temporary files are removed when the run ends; errors and layout warnings appear in the terminal.
 
