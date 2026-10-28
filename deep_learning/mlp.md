@@ -1,6 +1,6 @@
 
 <p align="center">
-  <img src="./assets/readme/mlp-cover.svg" width="100%" alt="MLP：多层感知机，从输入信号到学习到的权重">
+  <img src="../assets/readme/mlp-cover.svg" width="100%" alt="MLP：多层感知机，从输入信号到学习到的权重">
 </p>
 
 <details>

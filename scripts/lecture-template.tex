@@ -1,0 +1,72 @@
+% 与 thought_on_embodied_robot/bookstyle.tex 保持字体、页边距和正文行距一致。
+\documentclass[UTF8,a4paper,11pt,fontset=none]{ctexart}
+\usepackage[margin=25mm,top=24mm,bottom=25mm,headheight=15pt,headsep=8mm]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx,booktabs,longtable,array,calc}
+\usepackage{fancyhdr,enumitem,caption,listings,xcolor}
+\usepackage[unicode,hidelinks,bookmarksnumbered]{hyperref}
+% Pandoc 3.9 的无标题 longtable 与较早的 caption 包兼容。
+\newcounter{none}
+\setmainfont{Times New Roman}
+\setmonofont{Consolas}[Scale=0.9]
+\setCJKmainfont{SimSun}[AutoFakeBold=1.6]
+\setCJKsansfont{SimHei}
+\setCJKmonofont{SimSun}
+\xeCJKsetup{CJKmath=true}
+\setCJKmathfont{SimSun}
+\xeCJKDeclareCharClass{CJK}{"2460 -> "2473}
+\ctexset{
+ section={format=\Large\bfseries\raggedright,beforeskip=15pt,afterskip=8pt},
+ subsection={format=\large\bfseries\raggedright,beforeskip=12pt,afterskip=6pt},
+ subsubsection={format=\normalsize\bfseries\raggedright}}
+\setcounter{secnumdepth}{0}
+\setlength{\parindent}{2em}
+\setlength{\parskip}{2pt}
+\linespread{1.28}
+\setlength{\emergencystretch}{2em}
+\setlength{\tabcolsep}{5pt}
+\renewcommand{\arraystretch}{1.3}
+\setlength{\LTpre}{8pt}
+\setlength{\LTpost}{7pt}
+\setlist{itemsep=3pt,topsep=5pt,parsep=0pt,leftmargin=2em}
+\captionsetup{font=small,labelfont=bf,labelsep=quad,skip=7pt}
+\lstset{basicstyle=\ttfamily\footnotesize,breaklines=true,columns=fullflexible,
+ keepspaces=true,showstringspaces=false,frame=single,rulecolor=\color{black!25},
+ xleftmargin=5pt,xrightmargin=5pt,aboveskip=8pt,belowskip=8pt}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small $shorttitle$}
+\fancyhead[R]{\small 学习笔记}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.3pt}
+\fancypagestyle{plain}{\fancyhf{}\fancyfoot[C]{\small\thepage}\renewcommand{\headrulewidth}{0pt}}
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\providecommand{\passthrough}[1]{#1}
+\providecommand{\pandocbounded}[1]{#1}
+\hypersetup{pdftitle={$title$},pdfauthor={AcSg999},pdfsubject={$subtitle$}}
+\widowpenalty=10000
+\clubpenalty=10000
+\raggedbottom
+\begin{document}
+\begin{titlepage}
+\centering
+\vspace*{35mm}
+{\large 自动化与机器学习\par}
+\vspace{15mm}
+{\Huge\bfseries $title$\par}
+\vspace{12mm}
+{\large $subtitle$\par}
+\vfill
+{\normalsize Markdown 排印版\par}
+\vspace{4mm}
+{\small 学术讲义 · AcSg999\par}
+\vspace*{15mm}
+\end{titlepage}
+\pagenumbering{roman}
+$if(toc)$
+{\small\linespread{1.05}\selectfont\tableofcontents}
+\clearpage
+$endif$
+\pagenumbering{arabic}
+$body$
+\end{document}
