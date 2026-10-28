@@ -32,6 +32,8 @@ These are learning notes. To report a conceptual or derivation issue, identify t
 
 Install **Python 3.9+, Pandoc 3.9+, and XeLaTeX** (TeX Live or MiKTeX), with SimSun, SimHei, Times New Roman, and Consolas fonts. The Python build script uses only the standard library.
 
+Blockquote formatting requires the LaTeX packages `tcolorbox` and `pdfcol`.
+
 Run from the repository root:
 
 ```bash

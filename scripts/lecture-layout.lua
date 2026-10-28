@@ -40,10 +40,18 @@ function CodeBlock(block)
     '\\begin{lstlisting}\n' .. block.text .. '\n\\end{lstlisting}\n\\end{minipage}\\par')
 end
 
-function Header(block)
-  -- 三份原稿的主要章节均从二级标题开始。
-  block.level = math.max(1, block.level - 1)
-  return block
+local function normalize_headers(document)
+  -- 以文档中最浅的标题为一级，目录显示从这里往下的三层。
+  local top_level = nil
+  document:walk({Header = function(header)
+    top_level = math.min(top_level or header.level, header.level)
+  end})
+  if not top_level then return document end
+  return document:walk({Header = function(header)
+    header.level = header.level - top_level + 1
+    return header
+  end})
 end
 
-return {{Para = split_images, Plain = split_images, CodeBlock = CodeBlock, Header = Header}}
+return {{Para = split_images, Plain = split_images, CodeBlock = CodeBlock,
+         Pandoc = normalize_headers}}

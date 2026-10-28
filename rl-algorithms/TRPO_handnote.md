@@ -1,5 +1,5 @@
 ## TRPO 
-keyward: KL divergence, surrogate advantage
+keyward: KL divergence, surrogate advantage, Natural Policy Gradient,   fisher information matrix, conjugate gradient, backtracking line search
 
 [spinningup TRPO](https://spinningup.openai.com/en/latest/algorithms/trpo.html#background)
 
@@ -184,7 +184,7 @@ $$
 
 3. **for** $k=0,1,2,\ldots$，重复以下步骤：
 
-4. 用当前策略$\pi_k=\pi_{\theta_k}$与环境交互，收集轨迹集合$\mathcal D_k=\{\tau_i\}$。其中$\tau_i$是一条轨迹，$|\mathcal D_k|$是轨迹条数；下文$\hat{\cdot}$表示用这批样本得到的估计。
+4. 用当前策略$\pi_k=\pi_{\theta_k}$与环境交互，收集轨迹集合$\mathcal D_k=\{\tau_i\}$。其中$\tau_i$是一条轨迹，$|\mathcal D_k|$是轨迹条数；下文hat表示用这批样本得到的估计。
 
     > $\mathcal D_k=\{\tau_1,\tau_2,\ldots,\tau_N\}$,
     >

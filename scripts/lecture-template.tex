@@ -4,6 +4,8 @@
 \usepackage{amsmath,amssymb}
 \usepackage{graphicx,booktabs,longtable,array,calc}
 \usepackage{fancyhdr,enumitem,caption,listings,xcolor}
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable}
 \usepackage[unicode,hidelinks,bookmarksnumbered]{hyperref}
 % Pandoc 3.9 的无标题 longtable 与较早的 caption 包兼容。
 \newcounter{none}
@@ -29,6 +31,18 @@
 \setlength{\LTpre}{8pt}
 \setlength{\LTpost}{7pt}
 \setlist{itemsep=3pt,topsep=5pt,parsep=0pt,leftmargin=2em}
+% Markdown 引用块：保留列表内的可用宽度，背景与左侧竖线随内容跨页。
+\tcbset{markdownquote/.style={
+ breakable,colback=black!3,colframe=black!30,
+ boxrule=0pt,leftrule=2pt,arc=0pt,outer arc=0pt,
+ boxsep=0pt,left=9pt,right=9pt,top=5pt,bottom=5pt,
+ before skip=6pt,after skip=6pt}}
+\renewenvironment{quote}{%
+ \begin{tcolorbox}[markdownquote]
+ \setlength{\parindent}{0pt}\setlength{\parskip}{4pt}
+ \setlength{\abovedisplayskip}{5pt}\setlength{\belowdisplayskip}{5pt}
+ \setlength{\abovedisplayshortskip}{3pt}\setlength{\belowdisplayshortskip}{3pt}
+}{\end{tcolorbox}}
 \captionsetup{font=small,labelfont=bf,labelsep=quad,skip=7pt}
 \lstset{basicstyle=\ttfamily\footnotesize,breaklines=true,columns=fullflexible,
  keepspaces=true,showstringspaces=false,frame=single,rulecolor=\color{black!25},
@@ -64,6 +78,9 @@
 \end{titlepage}
 \pagenumbering{roman}
 $if(toc)$
+$if(toc-depth)$
+\setcounter{tocdepth}{$toc-depth$}
+$endif$
 {\small\linespread{1.05}\selectfont\tableofcontents}
 \clearpage
 $endif$

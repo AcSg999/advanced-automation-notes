@@ -96,7 +96,7 @@ def compile_markdown(source, engine, work):
          f"--lua-filter={SCRIPTS / 'lecture-layout.lua'}",
          "--metadata", f"title={title}", "--metadata", "subtitle=学习笔记",
          "--metadata", f"shorttitle={title}", "--metadata", f"source={source.as_posix()}",
-         "--toc", "--toc-depth=1", "--output", str(tex)],
+         "--toc", "--toc-depth=3", "--output", str(tex)],
         input=result.stdout, text=True, encoding="utf-8", check=True,
     )
     # 在原 Markdown 的目录运行，以保留全部相对图片路径。
