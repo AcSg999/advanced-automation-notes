@@ -6,6 +6,12 @@ From deep learning to reinforcement learning and robot tasks, these notes docume
 
 **Markdown supports source reading, forks, and collaborative editing. PDFs provide typeset editions for reading, downloading, and printing.**
 
+## Courses and resources behind these notes
+
+- rl-xihu: Notes on *Mathematical Principles of Reinforcement Learning*, a course by Shiyu Zhao at Westlake University.
+- deep_learning: Notes from a deep learning course, covering foundational algorithms such as KNN and MLP.
+- rl-algorithms: Notes based on OpenAI's open-source *Spinning Up* resource, covering algorithms such as TRPO, PPO, and SAC.
+
 ## Course materials
 
 Use the links below to read or download the materials.
