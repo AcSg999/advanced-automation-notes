@@ -36,8 +36,9 @@ local function split_images(block)
 end
 
 function CodeBlock(block)
-  return pandoc.RawBlock('latex', '\\par\\noindent\\begin{minipage}{\\linewidth}\n' ..
-    '\\begin{lstlisting}\n' .. block.text .. '\n\\end{lstlisting}\n\\end{minipage}\\par')
+  -- listings 自身支持跨页；minipage 会将长代码锁在同一页，导致溢出甚至耗尽 TeX 内存。
+  return pandoc.RawBlock('latex', '\\begin{lstlisting}\n' ..
+    block.text .. '\n\\end{lstlisting}')
 end
 
 local function normalize_headers(document)
