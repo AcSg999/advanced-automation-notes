@@ -31,6 +31,7 @@ md原稿保留作者的原始表达；英文版面向英语学习者整理，便
 | 3 | 西湖大学强化学习 | [MD](rl-xihu/西湖大学强化学习.md) | [English](rl-xihu/西湖大学强化学习.en.md) | [PDF](https://acsg999.github.io/advanced-automation-notes/rl-xihu/%E8%A5%BF%E6%B9%96%E5%A4%A7%E5%AD%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0.pdf) | Bellman 方程、价值迭代、MC、TD、DQN、策略梯度与 Actor-Critic |
 | 4 | 具身智能技术路线 | [LaTeX](thought_on_embodied_robot/roadmap_for_embodied_tech.tex) | — | [PDF](https://acsg999.github.io/advanced-automation-notes/thought_on_embodied_robot/roadmap_for_embodied_tech.pdf) | 任务建模、VLA、力触觉、世界模型、系统组合与评测 |
 | 5 | TRPO：Trust Region Policy Optimization | [MD](rl-algorithms/TRPO_handnote.md) | [English](rl-algorithms/TRPO_handnote.en.md) | [PDF](https://acsg999.github.io/advanced-automation-notes/rl-algorithms/TRPO_handnote.pdf) | KL 散度、代理优势、自然策略梯度、Fisher 信息矩阵、共轭梯度法、回溯线搜索 |
+| 6 | PPO：Proximal Policy Optimization | [MD](rl-algorithms/PPO_handnote.md) | - | [PDF](https://acsg999.github.io/advanced-automation-notes/rl-algorithms/PPO_handnote.pdf) | 剪切目标函数、重要性采样、GAE、熵正则化、PPO-Clip 与 PPO-Penalty |
 
 
 ## 如何阅读
