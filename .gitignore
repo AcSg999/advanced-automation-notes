@@ -6,3 +6,6 @@ __pycache__/
 
 AGENTS.md
 WORK_LOG.md
+rl-algorithms/report.md
+rl-algorithms/report.pdf
+rl-algorithms/loss_reward.png

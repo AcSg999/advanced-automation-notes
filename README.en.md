@@ -17,7 +17,6 @@ From deep learning to reinforcement learning and robot tasks, these notes docume
 
 Follow the solid arrows on the cover, or enter at a topic that matches your background. For a task-first approach, start with the embodied intelligence overview, then revisit the foundations as needed.
 
-The [editable cover and roadmap (PPTX)](reading-roadmap.pptx) sits beside this README: slide 1 is Chinese and slide 2 is English. After saving edits, run `python scripts/export_reading_roadmap.py` to update both covers.
 
 ## Course materials
 

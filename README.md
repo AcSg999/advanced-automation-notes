@@ -15,7 +15,6 @@
 
 从基础起步，可按图中实线顺读；已有基础可直接进入对应主题。关注机器人任务时，可先读具身智能总览，再回查所需知识。
 
-[可编辑封面与路线图（PPTX）](reading-roadmap.pptx) 与本 README 位于同一目录，第 1 页为中文，第 2 页为英文。保存修改后，运行 `python scripts/export_reading_roadmap.py` 同步更新两张封面。
 
 ## 课程资料
 
