@@ -1,0 +1,18 @@
+digraph {
+  graph [rankdir=LR, bgcolor=white, pad=0.15, nodesep=0.42, ranksep=0.42];
+  node [shape=box, style="rounded,filled", fontname="Microsoft YaHei",
+        fontsize=16, margin="0.33,0.13", color="#829aa8", fillcolor="#f5f8fb"];
+  edge [fontname="Microsoft YaHei", fontsize=13, color="#546f7e",
+        arrowsize=0.72, penwidth=1.35];
+  actor [label="Actor 重参数采样\n输入回放状态 s", fillcolor="#e8f1fa"];
+  q [label="在线双 Q 取小值\n保留对动作的梯度"];
+  entropy [label="计算新动作的\n对数概率"];
+  loss [label="Actor 损失\nα log π − Q"];
+  update [label="反传并更新 Actor", fillcolor="#eaf4ed"];
+  actor -> q [label="s、新动作"];
+  actor -> entropy [label="新动作"];
+  q -> loss [label="软 Q"];
+  entropy -> loss [label="log π"];
+  loss -> update;
+  {rank=same; q; entropy}
+}

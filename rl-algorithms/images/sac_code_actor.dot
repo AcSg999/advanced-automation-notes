@@ -1,0 +1,16 @@
+digraph {
+graph [rankdir=LR, newrank=true, bgcolor=white, pad=0.15, nodesep=0.32, ranksep=0.42];
+node [shape=box, style="rounded,filled", color="#7e94a2", fillcolor="#f4f8fb", fontname="Microsoft YaHei", fontsize=16, margin="0.30,0.11"];
+edge [color="#557181", arrowsize=0.75, penwidth=1.4, fontname="Microsoft YaHei", fontsize=13];
+obs [label="回放状态 s\n重新采当前动作", fillcolor="#e6f0f8"];
+sample [label="actor：rsample\n可对动作路径求导"];
+q [label="在线双 Q 取小值\n保留动作输入的梯度"];
+logp [label="当前动作的\n校正后 log-prob"];
+loss [label="actor loss\n温度 × log-prob − Q"];
+step [label="actor_optimizer\n只改变 actor 参数", fillcolor="#edf5eb"];
+obs -> sample;
+sample -> q -> loss;
+sample -> logp -> loss;
+loss -> step;
+{rank=same; q; logp}
+}

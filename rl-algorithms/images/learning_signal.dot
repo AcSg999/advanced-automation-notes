@@ -1,0 +1,24 @@
+digraph {
+ graph [layout=neato, overlap=true, splines=line, bgcolor="white", pad=0.18];
+ node [fontname="Microsoft YaHei", fontsize=15, fontcolor="#243842", pin=true, shape=plain];
+ edge [color="#8698a2", arrowsize=0.72];
+ xl [shape=point, style=invis, width=0, label="", pos="-2.95,0!"];
+ xr [shape=point, style=invis, width=0, label="", pos="2.95,0!"];
+ yb [shape=point, style=invis, width=0, label="", pos="0,-1.4!"];
+ yt [shape=point, style=invis, width=0, label="", pos="0,1.4!"];
+ xl -> xr;
+ yb -> yt;
+ ax [label="动作微调量 u", pos="2.65,-0.27!"];
+ ay [label="剪刀位移", pos="0,1.65!"];
+ lo [shape=point, style=invis, width=0, label="", pos="-2.15,-1.04!"];
+ hi [shape=point, style=invis, width=0, label="", pos="2.15,1.04!"];
+ mlo [shape=point, style=invis, width=0, label="", pos="-2.15,1.04!"];
+ mhi [shape=point, style=invis, width=0, label="", pos="2.15,-1.04!"];
+ lo -> hi [color="#167563", penwidth=2.7];
+ mhi -> mlo [color="#b25d34", penwidth=2.7];
+ actual [label="真实 f(u) = u", pos="1.77,1.29!", fontcolor="#167563"];
+ pred [label="模型预测 = −u", pos="-1.68,1.29!", fontcolor="#a6502a"];
+ o [shape=circle, label="", pos="0,0!", fixedsize=true, width=0.10, color="#243842", style=filled, fillcolor=white, penwidth=1.35];
+ foot [label="u = 0 时两者预测相同，位移增加的方向相反", pos="0,-1.70!", fontsize=14];
+ zero [label="0", pos="0.16,-0.16!", fontsize=12];
+}

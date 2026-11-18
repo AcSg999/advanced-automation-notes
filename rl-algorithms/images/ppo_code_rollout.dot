@@ -1,0 +1,12 @@
+digraph {
+graph [rankdir=LR, newrank=true, bgcolor=white, pad=0.15, nodesep=0.32, ranksep=0.42];
+node [shape=box, style="rounded,filled", color="#7e94a2", fillcolor="#f4f8fb", fontname="Microsoft YaHei", fontsize=16, margin="0.30,0.11"];
+edge [color="#557181", arrowsize=0.75, penwidth=1.4, fontname="Microsoft YaHei", fontsize=13];
+act [label="旧策略采样动作\n同时估计 V(s)", fillcolor="#e6f0f8"];
+env [label="envs.step\n得到奖励与下一观测"];
+batch [label="保存本轮轨迹\n含旧 log-prob、旧 V"];
+gae [label="逆序算 GAE\n固定优势与回归目标", fillcolor="#edf5eb"];
+epochs [label="展平时间与环境维\n打乱并分小批多轮更新"];
+act -> env -> batch -> gae -> epochs;
+epochs -> act [constraint=false, style=dashed, color="#897446", label="下一轮用更新后的策略采样"];
+}

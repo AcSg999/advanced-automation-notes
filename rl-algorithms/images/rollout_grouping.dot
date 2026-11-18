@@ -1,0 +1,33 @@
+digraph {
+ graph [rankdir=LR, bgcolor="white", pad=0.18, nodesep=0.27, ranksep=0.43, fontname="Microsoft YaHei", newrank=true];
+ node [shape=box, style="rounded,filled", color="#8ca0ae", fillcolor="#f5f8fb", fontname="Microsoft YaHei", fontsize=15, margin="0.30,0.10"];
+ edge [color="#617786", arrowsize=0.74, penwidth=1.2, fontname="Microsoft YaHei", fontsize=11];
+ subgraph cluster_age {
+ label="按回合步数对齐"; style=rounded; color="#d5dce0"; fontcolor="#405764"; fontsize=17;
+ t1 [label="轨迹 A 的第 70 步\n已经夹稳"];
+ t2 [label="轨迹 B 的第 70 步\n正在打滑"];
+ r1 [label="后续回报 A"];
+ r2 [label="后续回报 B"];
+ c1 [label="组内比较\n起始接触不同", fillcolor="#f8eee5", color="#c69878"];
+ t1 -> r1 -> c1;
+ t2 -> r2 -> c1;
+ {rank=same; t1; t2}
+ {rank=same; r1; r2}
+ }
+ subgraph cluster_state {
+ label="从同一接触快照分支"; style=rounded; color="#c7dbd2"; fontcolor="#225343"; fontsize=17;
+ s [label="保存并复制快照\n同一打滑状态", fillcolor="#e8f4ed", color="#84a998"];
+ a [label="独立尝试 A"];
+ b [label="独立尝试 B"];
+ ra [label="后续回报 A"];
+ rb [label="后续回报 B"];
+ c2 [label="组内比较\n起始接触相同", fillcolor="#e8f4ed", color="#84a998"];
+ s -> a -> ra -> c2;
+ s -> b -> rb -> c2;
+ {rank=same; a; b}
+ {rank=same; ra; rb}
+ }
+ {rank=same; t1; a}
+ {rank=same; r1; ra}
+ {rank=same; c1; c2; c1 -> c2 [style=invis]}
+}

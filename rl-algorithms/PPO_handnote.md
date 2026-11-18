@@ -181,6 +181,41 @@ PPO trains a stochastic policy in an on-policy way.从随机策略开始，策�
 
 ## 2. full code implementation
 
+### 2.1 先采一批，再在这一批上做多轮更新
+
+下面以本节保存的 CleanRL 离散动作 PPO 为准。想理解代码，先找外层的 `for iteration`。每一轮先跑完内层 `for step`，再倒序算优势，最后才进入 `for epoch`。所以在整段采样期间，actor 和 critic 的参数都还没有更新。
+
+![CleanRL PPO 先采轨迹、计算 GAE，再多轮优化](images/ppo_code_rollout.png)
+
+- **交互时**，`get_action_and_value(next_obs)` 没收到动作，于是从 `Categorical` 抽一个动作，同时计算该动作的对数概率和当前状态价值。代码把三者存入 `actions`、`logprobs` 和 `values`。这段在 `torch.no_grad()` 内，`envs.step` 收到的是 NumPy 动作。
+- **采样结束后**，`reversed(range(args.num_steps))` 为每个环境从后往前算 GAE。令 $s_t$、$r_t$ 分别为当前状态和一步奖励，$m_t$ 表示这次转移后还可继续时为 1，$\gamma$ 和 $\lambda$ 分别为折扣及 GAE 衰减因子。用采样时的 critic 得到 $V_{\mathrm{old}}$，先算一步 TD 误差，再累计优势：
+
+$$
+\begin{aligned}
+\delta_t &= r_t+\gamma m_t V_{\mathrm{old}}(s_{t+1})
+            -V_{\mathrm{old}}(s_t),\\
+\hat A_t &= \delta_t+\gamma\lambda m_t\hat A_{t+1}.
+\end{aligned}
+$$
+
+代码里的 `returns = advantages + values` 构造 critic 的拟合目标。这里的 `returns` 是由 GAE 与旧价值构造的目标，包含价值自举。整批优势、目标和旧对数概率随后固定下来。此版本把 `terminations` 和 `truncations` 合并成 `next_done`，两种情况都会切断 GAE；其他版本的截断处理要看具体实现。
+
+### 2.2 同一个动作重新打分，两个损失一起反传
+
+![CleanRL PPO 小批次用固定标签更新 actor 与 critic](images/ppo_code_update.png)
+
+进入小批次后，代码再次调用 `get_action_and_value`。这次同时传入小批次观测与保存的 `b_actions`，当前 actor 对这些旧动作重新计算对数概率。设 $\ell_{\mathrm{new}}$ 和 $\ell_{\mathrm{old}}$ 是同一状态、同一动作的新旧对数概率，$\rho$ 是代码里的动作概率比：
+
+$$
+\rho=\exp(\ell_{\mathrm{new}}-\ell_{\mathrm{old}}).
+$$
+
+`pg_loss` 用这个比值与固定优势构造裁剪后的策略损失。`newvalue` 来自当前 critic，`v_loss` 把它拉向固定的 `b_returns`，开启 `clip_vloss` 时也会用 `b_values` 限制价值变化。代码把策略项、熵项和价值项合起来做一次 `backward()`，再对 `agent.parameters()` 做整体梯度范数裁剪，最后调用同一个 Adam。
+
+在这份代码里，`self.actor` 和 `self.critic` 是各自独立的网络，合在同一个 `Agent` 里管理。策略损失和熵项的梯度进 actor，价值损失的梯度进 critic。虽然 GAE 用过 critic，优势已经在无梯度阶段算成了标签，所以策略损失没有一条穿过 GAE 回到 critic 的路径。PPO 更新 actor 用的是「提高或降低这个**已采样动作的概率**」。这个离散动作在交互时怎么触发环境状态改变，已经记录在 rollout 里。
+
+可在代码中搜索这四个位置：`torch.no_grad()` 定位采样，`returns` 定位目标，`logratio` 定位策略打分，`optimizer.step()` 定位参数更新。[CleanRL PPO 文档](https://docs.cleanrl.dev/rl-algorithms/ppo/#ppopy)
+
 ```
 # docs and experiment results can be found at https://docs.cleanrl.dev/rl-algorithms/ppo/#ppopy
 import os

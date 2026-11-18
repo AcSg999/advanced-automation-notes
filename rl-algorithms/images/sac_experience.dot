@@ -1,0 +1,18 @@
+digraph {
+  graph [rankdir=LR, bgcolor=white, pad=0.15, nodesep=0.42, ranksep=0.42];
+  node [shape=box, style="rounded,filled", fontname="Microsoft YaHei",
+        fontsize=16, margin="0.33,0.13", color="#829aa8", fillcolor="#f5f8fb"];
+  edge [fontname="Microsoft YaHei", fontsize=13, color="#546f7e",
+        arrowsize=0.72, penwidth=1.35];
+  obs [label="当前观测 s"];
+  actor [label="Actor\n输出动作分布", fillcolor="#e8f1fa"];
+  env [label="环境\n执行动作"];
+  record [label="接上本步 s、a\n组成一条转移"];
+  replay [label="经验池\n保存转移", fillcolor="#eaf4ed"];
+  obs -> actor;
+  actor -> env [label="采样动作 a"];
+  env -> record [label="r, s′, d"];
+  record -> replay;
+  env -> obs [constraint=false, style=dashed, color="#94783e",
+                label="未终止：进入 s′"];
+}

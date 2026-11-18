@@ -1,0 +1,20 @@
+digraph {
+  graph [rankdir=LR, bgcolor=white, pad=0.15, nodesep=0.42, ranksep=0.42];
+  node [shape=box, style="rounded,filled", fontname="Microsoft YaHei",
+        fontsize=16, margin="0.33,0.13", color="#829aa8", fillcolor="#f5f8fb"];
+  edge [fontname="Microsoft YaHei", fontsize=13, color="#546f7e",
+        arrowsize=0.72, penwidth=1.35];
+  replay [label="经验池\n抽取状态 s", fillcolor="#e8f1fa"];
+  prediction [label="在线 V\n输出状态价值 V(s)"];
+  actor [label="当前 Actor\n从 s 采新动作"];
+  goal [label="在线双 Q 取小值\n加熵项", fillcolor="#f8efe4"];
+  mse [label="MSE 回归\n更新在线 V", fillcolor="#eaf4ed"];
+  target [label="目标 V\n滑动平均", fillcolor="#eaf4ed"];
+  replay -> prediction [label="s"];
+  replay -> actor [label="s"];
+  actor -> goal [label="s、新动作、log π", fontsize=11];
+  prediction -> mse [label="预测值"];
+  goal -> mse [label="固定目标", fontsize=11];
+  mse -> target [label="参数同步", style=dashed, color="#94783e"];
+  {rank=same; prediction; goal}
+}

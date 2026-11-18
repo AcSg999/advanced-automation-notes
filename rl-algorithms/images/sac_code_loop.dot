@@ -1,0 +1,14 @@
+digraph {
+graph [rankdir=LR, newrank=true, bgcolor=white, pad=0.15, nodesep=0.32, ranksep=0.42];
+node [shape=box, style="rounded,filled", color="#7e94a2", fillcolor="#f4f8fb", fontname="Microsoft YaHei", fontsize=16, margin="0.30,0.11"];
+edge [color="#557181", arrowsize=0.75, penwidth=1.4, fontname="Microsoft YaHei", fontsize=13];
+action [label="预热随机动作\n之后由当前 actor 采样"];
+env [label="envs.step\n写入 replay buffer", fillcolor="#e6f0f8"];
+sample [label="超过预热步数\n抽取旧转移小批"];
+q [label="更新双 Q"];
+actor [label="到策略更新频率\n更新 actor／可调温度"];
+target [label="到目标同步频率\n滑动平均目标双 Q", fillcolor="#edf5eb"];
+action -> env -> sample -> q -> actor -> target;
+q -> target [constraint=false, style=dashed, label="未到策略更新频率"];
+target -> action [constraint=false, style=dashed, color="#897446", label="下一环境步"];
+}

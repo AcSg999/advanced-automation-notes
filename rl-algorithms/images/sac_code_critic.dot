@@ -1,0 +1,17 @@
+digraph {
+graph [rankdir=LR, newrank=true, bgcolor=white, pad=0.15, nodesep=0.32, ranksep=0.42];
+node [shape=box, style="rounded,filled", color="#7e94a2", fillcolor="#f4f8fb", fontname="Microsoft YaHei", fontsize=16, margin="0.30,0.11"];
+edge [color="#557181", arrowsize=0.75, penwidth=1.4, fontname="Microsoft YaHei", fontsize=13];
+batch [label="从 replay 抽一批\n(s, a, r, s′, d)", fillcolor="#e6f0f8"];
+online [label="在线双 Q\n读取旧动作 a"];
+sample [label="当前 actor\n从 s′ 采新动作"];
+target [label="目标双 Q 取小值\n加熵项，构造固定 y", fillcolor="#edf5eb"];
+error [label="两个预测各对 y 回归\n两项 MSE 求和"];
+update [label="q_optimizer\n更新在线双 Q", fillcolor="#edf5eb"];
+batch -> online -> error;
+batch -> sample -> target;
+batch -> target [constraint=false, style=dashed, label="奖励与终止掩码"];
+target -> error [label="固定 y"];
+error -> update;
+{rank=same; online; sample}
+}

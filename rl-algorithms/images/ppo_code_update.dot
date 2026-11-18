@@ -1,0 +1,17 @@
+digraph {
+graph [rankdir=LR, newrank=true, bgcolor=white, pad=0.15, nodesep=0.32, ranksep=0.42];
+node [shape=box, style="rounded,filled", color="#7e94a2", fillcolor="#f4f8fb", fontname="Microsoft YaHei", fontsize=16, margin="0.30,0.11"];
+edge [color="#557181", arrowsize=0.75, penwidth=1.4, fontname="Microsoft YaHei", fontsize=13];
+stored [label="固定小批次\n观测、旧动作与标签", fillcolor="#e6f0f8"];
+actor [label="当前 actor\n重算旧动作的 log-prob"];
+critic [label="当前 critic\n重算状态价值 V(s)"];
+policy [label="旧、新概率比\n策略裁剪项与熵项"];
+value [label="拟合固定 return\n可启用价值裁剪"];
+loss [label="合并损失\n一次反传"];
+adam [label="裁剪整体梯度\nAdam 更新两个网络", fillcolor="#edf5eb"];
+stored -> actor -> policy -> loss;
+stored -> critic -> value -> loss;
+loss -> adam;
+{rank=same; actor; critic}
+{rank=same; policy; value}
+}

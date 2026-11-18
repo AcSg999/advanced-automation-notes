@@ -1,0 +1,26 @@
+digraph {
+ graph [rankdir=LR, bgcolor="white", pad=0.16, newrank=true, nodesep=0.55, ranksep=0.47, fontname="Microsoft YaHei"];
+ node [shape=box, style="rounded,filled", color="#8ca0ae", fillcolor="#f5f8fb", fontname="Microsoft YaHei", fontsize=16, margin="0.31,0.12"];
+ edge [color="#566d7c", arrowsize=0.75, penwidth=1.35, fontname="Microsoft YaHei", fontsize=12];
+ subgraph cluster_ppo {
+ label="PPO  •  一轮内重复优化"; color="#ccd8e0"; style=rounded; fontcolor="#264b66"; fontsize=17;
+ batch [label="本轮策略采集\n一批交互轨迹", fillcolor="#e9f2fa"];
+ advantage [label="计算并固定\n优势估计"];
+ ppo [label="按概率比裁剪\n重复更新策略", fillcolor="#e9f2fa"];
+ newer [label="用更新后的\n策略再采数据"];
+ batch -> advantage -> ppo -> newer;
+ }
+ subgraph cluster_sac {
+ label="SAC  •  跨轮复用转移"; color="#c7dbd2"; style=rounded; fontcolor="#225343"; fontsize=17;
+ replay [label="历轮策略留下的\n回放池", fillcolor="#e8f4ed"];
+ transition [label="抽一条旧转移\n(s, a, r, s′)"];
+ next [label="当前策略在 s′\n选新的动作 a′", fillcolor="#e8f4ed"];
+ target [label="旧奖励 r ＋\n估计的后续价值"];
+ replay -> transition -> next -> target;
+ transition -> target [constraint=false, style=dashed, color="#39795f", label="旧奖励 r"];
+ }
+ {rank=same; batch; replay; batch -> replay [style=invis]}
+ {rank=same; advantage; transition}
+ {rank=same; ppo; next}
+ {rank=same; newer; target}
+}

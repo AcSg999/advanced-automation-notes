@@ -1,0 +1,18 @@
+digraph {
+  graph [rankdir=LR, bgcolor=white, pad=0.15, nodesep=0.42, ranksep=0.42];
+  node [shape=box, style="rounded,filled", fontname="Microsoft YaHei",
+        fontsize=16, margin="0.33,0.13", color="#829aa8", fillcolor="#f5f8fb"];
+  edge [fontname="Microsoft YaHei", fontsize=13, color="#546f7e",
+        arrowsize=0.72, penwidth=1.35];
+  replay [label="经验池\n(s, a, r, s′, d)", fillcolor="#e8f1fa"];
+  online [label="两个在线 Q\n给旧动作打分"];
+  goal [label="目标 V 读取 s′\n构造贝尔曼目标", fillcolor="#f8efe4"];
+  loss [label="用同一个 y\n分别算两项 MSE"];
+  update [label="更新两个在线 Q", fillcolor="#eaf4ed"];
+  replay -> online [label="s, a"];
+  replay -> goal [label="r, s′, d"];
+  online -> loss [label="预测值"];
+  goal -> loss [label="固定目标 y"];
+  loss -> update;
+  {rank=same; online; goal}
+}
