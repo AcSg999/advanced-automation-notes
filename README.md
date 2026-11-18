@@ -31,6 +31,8 @@ md原稿保留作者的原始表达；英文版面向英语学习者整理，便
 | 4 | 具身智能技术路线 | [LaTeX](thought_on_embodied_robot/roadmap_for_embodied_tech.tex) | — | [PDF](https://acsg999.github.io/advanced-automation-notes/thought_on_embodied_robot/roadmap_for_embodied_tech.pdf) | 任务建模、VLA、力触觉、世界模型、系统组合与评测 |
 | 5 | TRPO：Trust Region Policy Optimization | [MD](rl-algorithms/TRPO_handnote.md) | [English](rl-algorithms/TRPO_handnote.en.md) | [PDF](https://acsg999.github.io/advanced-automation-notes/rl-algorithms/TRPO_handnote.pdf) | KL 散度、代理优势、自然策略梯度、Fisher 信息矩阵、共轭梯度法、回溯线搜索 |
 | 6 | PPO：Proximal Policy Optimization | [MD](rl-algorithms/PPO_handnote.md) | - | [PDF](https://acsg999.github.io/advanced-automation-notes/rl-algorithms/PPO_handnote.pdf) | 剪切目标函数、重要性采样、GAE、熵正则化、PPO-Clip 与 PPO-Penalty |
+| 7 | SAC：Soft Actor-Critic | [MD](rl-algorithms/SAC_handnote.md) | — | [PDF](rl-algorithms/SAC_handnote.pdf) | 最大熵目标、Soft Bellman 方程、双 Q 更新、Tanh 动作压缩与自动调温 |
+| 8 | 灵巧手强化学习调优 | [MD](rl-algorithms/dex_tuning.md) | — | [PDF](rl-algorithms/dex_tuning.pdf) | 经验回放与数据利用、预测准确性与动作改进、动作重定向与直接强化学习 |
 
 
 ## 如何阅读

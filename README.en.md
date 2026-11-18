@@ -32,6 +32,8 @@ The originals preserve the author's own wording and learning process. The Englis
 | 4 | Technical Routes in Embodied Intelligence | [LaTeX](thought_on_embodied_robot/roadmap_for_embodied_tech.tex) | — | [PDF](https://acsg999.github.io/advanced-automation-notes/thought_on_embodied_robot/roadmap_for_embodied_tech.pdf) | Task modeling, VLA, force and touch, world models, system integration, and evaluation |
 | 5 | TRPO: Trust Region Policy Optimization | [MD](rl-algorithms/TRPO_handnote.md) | [English](rl-algorithms/TRPO_handnote.en.md) | [PDF](https://acsg999.github.io/advanced-automation-notes/rl-algorithms/TRPO_handnote.pdf) | KL divergence, surrogate advantage, natural policy gradients, Fisher information, conjugate gradients, and backtracking line search |
 | 6 | PPO: Proximal Policy Optimization | [MD](rl-algorithms/PPO_handnote.md) | - | [PDF](https://acsg999.github.io/advanced-automation-notes/rl-algorithms/PPO_handnote.pdf) | Clipped objective functions, importance sampling, GAE, entropy regularization, PPO-Clip and PPO-Penalty |
+| 7 | SAC: Soft Actor-Critic | [MD](rl-algorithms/SAC_handnote.md) | — | [PDF](rl-algorithms/SAC_handnote.pdf) | Maximum entropy objective, soft Bellman equations, twin Q updates, tanh action squashing, and automatic temperature tuning |
+| 8 | Reinforcement Learning Tuning for Dexterous Hands | [MD](rl-algorithms/dex_tuning.md) | — | [PDF](rl-algorithms/dex_tuning.pdf) | Experience replay and data reuse, prediction accuracy and action improvement, motion retargeting and direct reinforcement learning |
 
 ## Reading
 
