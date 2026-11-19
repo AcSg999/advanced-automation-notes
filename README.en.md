@@ -15,14 +15,14 @@ From deep learning to reinforcement learning and robot tasks, these notes docume
 
 ## Reading roadmap
 
-Follow the solid arrows on the cover, or enter at a topic that matches your background. For a task-first approach, start with the embodied intelligence overview, then revisit the foundations as needed.
+Start from the basic concepts, or enter at a topic that matches your background.
 
 
 ## Course materials
 
 Use the links below to read or download the materials.
 
-The originals preserve the author's own wording and learning process. The English editions are edited for English-speaking learners and contributors. PDFs are the existing original-language editions.
+The originals preserve the original wrtiting and learning process. The English editions are edited for English-speaking learners and contributors. PDFs are the existing original-language editions.
 
 | No. | Topic | Original notes | English Markdown | PDF (original) | Coverage |
 | :---: | --- | :---: | :---: | :---: | --- |
